@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:09:07 by fracurul          #+#    #+#             */
-/*   Updated: 2023/11/18 18:55:26 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:43:32 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_strlengnl(const char *s)
 	}
 	return (i);
 }
+
 void	*ft_callocgnl(size_t count, size_t size)
 {
 	char	*str;
@@ -41,6 +42,7 @@ void	*ft_callocgnl(size_t count, size_t size)
 	}
 	return (str);
 }
+
 char	*ft_gnljoin(char *s1, char *s2)
 {
 	int		i;
@@ -49,7 +51,7 @@ char	*ft_gnljoin(char *s1, char *s2)
 	int		size2;
 	char	*str;
 
-	if(!s1 && !s2)
+	if (!s1 && !s2)
 		return (NULL);
 	size1 = ft_strlengnl(s1);
 	size2 = ft_strlengnl(s2);
@@ -62,9 +64,9 @@ char	*ft_gnljoin(char *s1, char *s2)
 		str[i] = s1[i];
 	while (++j < size2)
 		str[i + j] = s2[j];
-	free(s1);
-	return (str);
+	return (free(s1), str);
 }
+
 int	ft_strchrgnl(char *s, char c)
 {
 	int	i;
@@ -73,11 +75,9 @@ int	ft_strchrgnl(char *s, char c)
 	while (s[i] != c && s[i] != '\0')
 		i++;
 	if (s[i] == c)
-		return(i);
+		return (i);
 	return (0);
 }
-
-
 
 char	*ft_buffer_ud(char *s)
 {
@@ -86,12 +86,15 @@ char	*ft_buffer_ud(char *s)
 	int		j;
 
 	i = ft_strchrgnl(s, '\n');
-	j  = ft_strlengnl(s) - i;
-	excessbuffer = (char *)ft_callocgnl(j + 2, 1);
+	j = ft_strlengnl(s) - i;
+	excessbuffer = (char *)ft_callocgnl(j + 1, 1);
 	if (!excessbuffer)
-		return(free(excessbuffer), NULL);
-	j = -1;
-	while (excessbuffer[++j])
+		return (free(excessbuffer), NULL);
+	j = 0;
+	while (excessbuffer[j])
+	{
 		excessbuffer[j] = s[i + j];
-	return(excessbuffer);
+		j++;
+	}
+	return (excessbuffer);
 }
