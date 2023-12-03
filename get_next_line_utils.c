@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:09:07 by fracurul          #+#    #+#             */
-/*   Updated: 2023/11/25 18:43:32 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:29:25 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	*ft_callocgnl(size_t count, size_t size)
 char	*ft_gnljoin(char *s1, char *s2)
 {
 	int		i;
-	int		j;
 	int		size1;
 	int		size2;
 	char	*str;
@@ -57,13 +56,13 @@ char	*ft_gnljoin(char *s1, char *s2)
 	size2 = ft_strlengnl(s2);
 	str = (char *)ft_callocgnl((size1 + size2) + 1, 1);
 	if (!str)
-		return (free(str), NULL);
+		return (free(s1), NULL);
 	i = -1;
-	j = -1;
 	while (++i < size1)
 		str[i] = s1[i];
-	while (++j < size2)
-		str[i + j] = s2[j];
+	i = -1;
+	while (++i < size2)
+		str[i + size1] = s2[i];
 	return (free(s1), str);
 }
 
@@ -77,24 +76,4 @@ int	ft_strchrgnl(char *s, char c)
 	if (s[i] == c)
 		return (i);
 	return (0);
-}
-
-char	*ft_buffer_ud(char *s)
-{
-	char	*excessbuffer;
-	int		i;
-	int		j;
-
-	i = ft_strchrgnl(s, '\n');
-	j = ft_strlengnl(s) - i;
-	excessbuffer = (char *)ft_callocgnl(j + 1, 1);
-	if (!excessbuffer)
-		return (free(excessbuffer), NULL);
-	j = 0;
-	while (excessbuffer[j])
-	{
-		excessbuffer[j] = s[i + j];
-		j++;
-	}
-	return (excessbuffer);
 }
