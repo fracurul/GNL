@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:05:55 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/16 19:21:29 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:01:23 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*ft_readgnl(int fd, char *s)
 		checkread = read(fd, bufferword, BUFFER_SIZE);
 		if (checkread == -1)
 			return (free(bufferword), free(s), NULL);
+		s[checkread] = '\0';
 		s = gnl_strjoin(s, bufferword);
 		if (gnl_strchr(s, '\n'))
 			break ;
@@ -88,7 +89,6 @@ char	*get_next_line(int fd)
 	char		*aux;
 
 	s = NULL;
-	aux = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	s = ft_readgnl(fd, s);
