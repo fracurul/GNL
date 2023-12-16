@@ -8,7 +8,7 @@ int main()
 	if (fd == -1)
 		return (1);
 	texto = get_next_line(fd);
-while (texto != NULL && texto)
+while (texto != NULL)
 	{
 		printf("%s", texto);
 		free(texto);
