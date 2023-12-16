@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:09:07 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/16 18:20:20 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/16 19:12:05 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int	gnl_strlen(const char *s)
 	return (i);
 }
 
-void	*gnl_calloc(size_t count)
+void	*gnl_calloc(size_t count, size_t size)
 {
 	char	*str;
 	size_t	i;
 
 	i = 0;
-	str = (char *)malloc(count);
+	str = (char *)malloc(count * size);
 	if (!str)
 		return (str);
 	while (i < count)
@@ -50,13 +50,11 @@ char	*gnl_strjoin(char *s1, char *s2)
 	int		size2;
 	char	*str;
 
-	if (!s1)
-		s1 = (char *)gnl_calloc(1);
-	if(!s2)
+	if (!s1 && !s2)
 		return (NULL);
 	size1 = gnl_strlen(s1);
 	size2 = gnl_strlen(s2);
-	str = (char *)gnl_calloc((size1 + size2) + 1);
+	str = (char *)gnl_calloc((size1 + size2) + 1, sizeof(char));
 	if (!str)
 		return (free(s1), NULL);
 	i = -1;
