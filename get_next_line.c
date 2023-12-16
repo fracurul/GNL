@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:05:55 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/03 18:56:37 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/16 18:32:54 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ char	*ft_get_line(char *s)
 	char	*line;
 	int		i;
 
-	if (ft_strchrgnl(s, '\n'))
-		i = ft_strchrgnl(s, '\n');
+	if (gnl_strchr(s, '\n'))
+		i = gnl_strchr(s, '\n');
 	else
-		i = ft_strlengnl(s);
-	line = (char *)ft_callocgnl(i + 1, 1);
+		i = gnl_strlen(s);
+	line = (char *)gnl_calloc(i + 2);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -30,7 +30,7 @@ char	*ft_get_line(char *s)
 		line[i] = s[i];
 		i++;
 	}
-	if (s[i] == '\n')
+	if (s[i] == '\n' && s[i])
 		line[i] = '\n';
 	return (line);
 }
@@ -41,17 +41,18 @@ char	*ft_readgnl(int fd, char *s)
 	int		checkread;
 
 	checkread = 1;
-	bufferword = (char *)ft_callocgnl(BUFFER_SIZE + 1, 1);
+	bufferword = (char *)gnl_calloc(BUFFER_SIZE + 1);
 	while (!bufferword)
-		return (NULL);
-	while (checkread > 0 || ft_strchrgnl(s, '\n'))
+		return (free(bufferword), NULL);
+	while (checkread > 0)
 	{
 		checkread = read(fd, bufferword, BUFFER_SIZE);
 		if (checkread == -1)
 			return (free(bufferword), NULL);
-		if (checkread == 0)
+		s = gnl_strjoin(s, bufferword);
+		s[checkread] = '\0';
+		if (gnl_strchr(s, '\n'))
 			break ;
-		s = ft_gnljoin(s, bufferword);
 	}
 	free(bufferword);
 	return (s);
@@ -63,13 +64,16 @@ char	*ft_buffer_ud(char *s)
 	int		i;
 	int		j;
 
-	if	(!s || !ft_strchrgnl(s, '\n'))
-		return (free (s), NULL);
-	i = ft_strchrgnl(s, '\n');
-	j = ft_strlengnl(s) - i;
-	excessbuffer = (char *)ft_callocgnl(j + 2, 1);
-	if (!excessbuffer)
+	i = 0;
+	while (s[i] && s[i] != '\n')
+		i++;
+	if(!s[i])
 		return (free(s), NULL);
+	i = gnl_strchr(s, '\n');
+	j = gnl_strlen(s) - i;
+	excessbuffer = (char *)gnl_calloc(j + 1);
+	if (!excessbuffer)
+		return (free(s), free(excessbuffer), NULL);
 	j = 0;
 	i++;
 	while (s && s[i + j])
