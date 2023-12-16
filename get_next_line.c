@@ -6,11 +6,12 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:05:55 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/16 20:01:23 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:19:20 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 char	*ft_get_line(char *s)
 {
@@ -20,6 +21,7 @@ char	*ft_get_line(char *s)
 	i = 0;
 	if (!s[i])
 		return (NULL);
+	printf("s[%d]= %c", i, s[i]);
 	while (s[i] && s[i] != '\n')
 		i++;
 	line = (char *)gnl_calloc(i + 2, sizeof(char));
@@ -50,7 +52,7 @@ char	*ft_readgnl(int fd, char *s)
 		checkread = read(fd, bufferword, BUFFER_SIZE);
 		if (checkread == -1)
 			return (free(bufferword), free(s), NULL);
-		s[checkread] = '\0';
+		bufferword[checkread] = '\0';
 		s = gnl_strjoin(s, bufferword);
 		if (gnl_strchr(s, '\n'))
 			break ;
