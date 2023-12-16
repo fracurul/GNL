@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:09:07 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/16 19:12:05 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:01:29 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ int	gnl_strlen(const char *s)
 
 void	*gnl_calloc(size_t count, size_t size)
 {
-	char	*str;
+	void	*str;
 	size_t	i;
 
 	i = 0;
 	str = (char *)malloc(count * size);
 	if (!str)
 		return (str);
-	while (i < count)
+	while (i < count * size)
 	{
-		str[i] = '\0';
+		((unsigned char *)str)[i] = '\0';
 		i++;
 	}
 	return (str);
@@ -54,7 +54,7 @@ char	*gnl_strjoin(char *s1, char *s2)
 		return (NULL);
 	size1 = gnl_strlen(s1);
 	size2 = gnl_strlen(s2);
-	str = (char *)gnl_calloc((size1 + size2) + 1, sizeof(char));
+	str = (char *)gnl_calloc((size1 + size2) + 2, sizeof(char));
 	if (!str)
 		return (free(s1), NULL);
 	i = -1;
@@ -66,14 +66,14 @@ char	*gnl_strjoin(char *s1, char *s2)
 	return (free(s1), str);
 }
 
-int	gnl_strchr(char *s, char c)
+int	gnl_strchr(char *s, int c)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] != c && s[i] != '\0')
+	while (s[i] != (char)c && s[i] != '\0')
 		i++;
-	if (s[i] == c)
+	if (s[i] == (char)c)
 		return (i);
 	return (0);
 }
