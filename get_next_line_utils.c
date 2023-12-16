@@ -6,13 +6,13 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:09:07 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/03 18:29:25 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/16 18:20:20 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlengnl(const char *s)
+int	gnl_strlen(const char *s)
 {
 	int	i;
 
@@ -26,13 +26,13 @@ int	ft_strlengnl(const char *s)
 	return (i);
 }
 
-void	*ft_callocgnl(size_t count, size_t size)
+void	*gnl_calloc(size_t count)
 {
 	char	*str;
 	size_t	i;
 
 	i = 0;
-	str = (char *)malloc(count * size);
+	str = (char *)malloc(count);
 	if (!str)
 		return (str);
 	while (i < count)
@@ -43,18 +43,20 @@ void	*ft_callocgnl(size_t count, size_t size)
 	return (str);
 }
 
-char	*ft_gnljoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		size1;
 	int		size2;
 	char	*str;
 
-	if (!s1 && !s2)
+	if (!s1)
+		s1 = (char *)gnl_calloc(1);
+	if(!s2)
 		return (NULL);
-	size1 = ft_strlengnl(s1);
-	size2 = ft_strlengnl(s2);
-	str = (char *)ft_callocgnl((size1 + size2) + 1, 1);
+	size1 = gnl_strlen(s1);
+	size2 = gnl_strlen(s2);
+	str = (char *)gnl_calloc((size1 + size2) + 1);
 	if (!str)
 		return (free(s1), NULL);
 	i = -1;
@@ -66,7 +68,7 @@ char	*ft_gnljoin(char *s1, char *s2)
 	return (free(s1), str);
 }
 
-int	ft_strchrgnl(char *s, char c)
+int	gnl_strchr(char *s, char c)
 {
 	int	i;
 
