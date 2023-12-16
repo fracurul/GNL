@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:05:55 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/16 18:32:54 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/16 19:21:29 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ char	*ft_get_line(char *s)
 	char	*line;
 	int		i;
 
-	if (gnl_strchr(s, '\n'))
-		i = gnl_strchr(s, '\n');
-	else
-		i = gnl_strlen(s);
-	line = (char *)gnl_calloc(i + 2);
+	i = 0;
+	if (!s[i])
+		return (NULL);
+	while (s[i] && s[i] != '\n')
+		i++;
+	line = (char *)gnl_calloc(i + 2, sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -41,16 +42,15 @@ char	*ft_readgnl(int fd, char *s)
 	int		checkread;
 
 	checkread = 1;
-	bufferword = (char *)gnl_calloc(BUFFER_SIZE + 1);
+	bufferword = (char *)gnl_calloc(BUFFER_SIZE + 1, sizeof(char));
 	while (!bufferword)
-		return (free(bufferword), NULL);
+		return (NULL);
 	while (checkread > 0)
 	{
 		checkread = read(fd, bufferword, BUFFER_SIZE);
 		if (checkread == -1)
-			return (free(bufferword), NULL);
+			return (free(bufferword), free(s), NULL);
 		s = gnl_strjoin(s, bufferword);
-		s[checkread] = '\0';
 		if (gnl_strchr(s, '\n'))
 			break ;
 	}
@@ -63,24 +63,21 @@ char	*ft_buffer_ud(char *s)
 	char	*excessbuffer;
 	int		i;
 	int		j;
+	int		buffersize;
 
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
 	if(!s[i])
 		return (free(s), NULL);
-	i = gnl_strchr(s, '\n');
-	j = gnl_strlen(s) - i;
-	excessbuffer = (char *)gnl_calloc(j + 1);
+	buffersize = gnl_strlen(s);
+	excessbuffer = (char *)gnl_calloc(buffersize - i + 1, sizeof(char));
 	if (!excessbuffer)
-		return (free(s), free(excessbuffer), NULL);
+		return (NULL);
 	j = 0;
 	i++;
-	while (s && s[i + j])
-	{
-		excessbuffer[j] = s[i + j];
-		j++;
-	}
+	while (s[i])
+		excessbuffer[j++] = s[i++];
 	free(s);
 	return (excessbuffer);
 }
@@ -90,6 +87,7 @@ char	*get_next_line(int fd)
 	static char	*s;
 	char		*aux;
 
+	s = NULL;
 	aux = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
