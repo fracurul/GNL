@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:05:55 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/16 20:19:20 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:31:29 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ char	*ft_get_line(char *s)
 	i = 0;
 	if (!s[i])
 		return (NULL);
-	printf("s[%d]= %c", i, s[i]);
 	while (s[i] && s[i] != '\n')
 		i++;
-	line = (char *)gnl_calloc(i + 2, sizeof(char));
+	line = (char *)gnl_calloc((i + 2), sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -44,7 +43,7 @@ char	*ft_readgnl(int fd, char *s)
 	int		checkread;
 
 	checkread = 1;
-	bufferword = (char *)gnl_calloc(BUFFER_SIZE + 1, sizeof(char));
+	bufferword = (char *)gnl_calloc((BUFFER_SIZE + 1), sizeof(char));
 	while (!bufferword)
 		return (NULL);
 	while (checkread > 0)
@@ -71,10 +70,10 @@ char	*ft_buffer_ud(char *s)
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
-	if(!s[i])
+	if (!s[i])
 		return (free(s), NULL);
 	buffersize = gnl_strlen(s);
-	excessbuffer = (char *)gnl_calloc(buffersize - i + 1, sizeof(char));
+	excessbuffer = (char *)gnl_calloc((buffersize - i + 1), sizeof(char));
 	if (!excessbuffer)
 		return (NULL);
 	j = 0;
@@ -87,14 +86,13 @@ char	*ft_buffer_ud(char *s)
 
 char	*get_next_line(int fd)
 {
-	static char	*s;
+	static char	*s = NULL;
 	char		*aux;
 
-	s = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	s = ft_readgnl(fd, s);
-	if (s == NULL)
+	if (!s)
 		return (NULL);
 	aux = ft_get_line(s);
 	s = ft_buffer_ud(s);
