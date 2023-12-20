@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:05:55 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/20 20:31:29 by fracurul         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:34:19 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ char	*ft_buffer_ud(char *s)
 	i++;
 	while (s[i])
 		excessbuffer[j++] = s[i++];
-	free(s);
-	return (excessbuffer);
+	return (free(s), excessbuffer);
 }
 
 char	*get_next_line(int fd)
