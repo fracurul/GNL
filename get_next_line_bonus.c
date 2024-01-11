@@ -6,11 +6,11 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:40:27 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/20 20:51:43 by fracurul         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:46:16 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 char	*ft_get_line(char *s)
