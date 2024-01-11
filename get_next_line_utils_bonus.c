@@ -6,11 +6,11 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:42:03 by fracurul          #+#    #+#             */
-/*   Updated: 2023/12/20 20:42:12 by fracurul         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:49:04 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	gnl_strlen(const char *s)
 {
